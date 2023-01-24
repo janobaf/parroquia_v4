@@ -139,65 +139,7 @@
         </div>
 
 
-		<script >
-	
-			function servidorEmergente(){
-				var dni = document.getElementById('dni').value;
-				var proxyUrl = 'https://apiperu.dev/api/dni/'+dni+'?api_token=b064c85c2c4575b6a0b08bb1a8a31cc9a2dcb6e77086088af3675420c7076b43';
-						
-				fetch(proxyUrl )
-				.then(blob => blob.json())
-				.then(data => {
-					if(data['success']==true)
-					{
-						var apellidoMaterno = document.getElementById("apellidoMaterno");
-						apellidoMaterno.value =  data['data']['apellido_materno'];
-						var ApellidoPaterno = document.getElementById("ApellidoPaterno");
-						ApellidoPaterno.value =  data['data']['apellido_paterno'];
-						var nombre = document.getElementById("nombre");
-						nombre.value =  data['data']['nombres']
-
-					}
-					else {
-						alert("dni no existe")
-					}
-				})
-				.catch(e => {
-					alert("DNI NO EXISTE");	
-					document.getElementById("error").innerHTML = "no se encontro el dni ";
-				});	
-			  }
-			
-			  function  traer() {
-				var dni = document.getElementById("dni").value;
-				if(dni.length > 0 && dni.length ==8 && !isNaN(dni)) {
-					var proxyUrl = 'https://desolate-meadow-71010.herokuapp.com/',
-					targetUrl = 'https://api.apis.net.pe/v1/dni?numero='+dni;
-					fetch(proxyUrl+targetUrl)
-					.then(blob =>blob.json() )            
-					.then(data => {
-						
-						if(!data['error']) {
-							var apellidoMaterno = document.getElementById("apellidoMaterno");
-							apellidoMaterno.value =  data['apellidoMaterno'];
-							var ApellidoPaterno = document.getElementById("ApellidoPaterno");
-							ApellidoPaterno.value =  data['apellidoPaterno'];
-							var nombre = document.getElementById("nombre");
-							nombre.value =  data['nombres'];
-						}	
-					})	
-					.catch(e => {
-						console.log(data);
-						alert("error");
-					//	servidorEmergente();
-					});
-				}
-				else { alert("DNI no tiene suficientes letras o no el dni no es numerico"); }
-				
-				
-			}
-	
-		  </script>
+		
     </body>
     
     <footer th:replace="menu/footer :: footerFragment">		
