@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <head th:replace="menu/cabecera :: cabeceraFragment">
+ </head>
+
+<body>	
+
+ 		<!-- MENU INICIO -->  
+        <div th:replace="menu/menu :: menuFragment">
+ 		</div>
+        <!-- MENU FIN -->
+      
+	 	<div id="main-container" sec:authorize="hasRole('ROLE_USER')">	 	
+	 		<h1 class="texto-titulo" th:text ="${titulo}"></h1>
+	 		<div id="fechaactual"><i onclick="actualizar()">HOY: </i></div>	 
+	 		
+	 		<main>
+				<form  th:action="@{/reportAno}"method="GET">
+					
+					 <select name="anio">
+					    <script>
+					     var d = new Date();
+					     var n = d.getFullYear();
+					       for(var i = n; i >=2020; i--)
+					           document.write('<option  th:value=i >'+i+'</option>');
+					    </script>
+					 </select>
+			         
+					<input type="submit" class="btn-buscar"  value="aceptar" id="btnBuscar"  > 
+	
+				</form>	
+			</main>
+
+	 		
+	 		 <table class="table">
+								  <thead>
+									  <tr >
+										 <th>
+											 <label th:each="lista : ${surveyMap.keySet()}" style="text-align: center">
+											 <h3 th:text="${lista}"></h3>
+											 </label>
+										</th>
+										
+								 	</tr>
+								  </thead>
+								 <tbody>
+									 <tr>	
+										 <th>
+											<label th:each="lista : ${surveyMap.values()}" style="text-align: center">									
+											<h5 th:text="${lista}"></h5>
+											</label>
+										</th>							
+									</tr>		
+								 </tbody> 		                   
+		                   </table>
+		                   			
+	 		<div>
+                <div>
+	                <div id="container" style="width: 95%; height: 95%; margin: 0 auto overflow-x: auto;">
+	                </div>
+	               
+					
+				</div>                
+            </div>			
+	 	</div>				
+		
+		<script th:inline="javascript">	
+			var name = [[${surveyMap.keySet()}]];
+			
+			var datos = [[${surveyMap.values()}]];
+			var final =[];
+			var aux =name.split(',');
+			var contador =0;
+			
+			for (var i =0; i<datos.length;i++)
+			{
+				if(datos[i]==0)
+				 contador= contador+1
+			}
+			console.log(contador)
+			
+			
+			if(contador<3)
+			{
+				for (var i=0;i<aux.length;i++)
+			{
+				final.push({
+					
+					name:aux[i],
+					y:datos[i]
+				});
+			}
+			
+			Highcharts.chart('container', {
+			  chart: {
+			    type: 'pie',
+			    options3d: {
+			      enabled: true,
+			      alpha: 45,
+			      beta: 0
+			    }
+			  },
+			  title: {
+			    text: 'Reporte Anual Libros de los Sacramentos',
+			    align: 'center'
+			  },
+			  subtitle: {
+			    text: 'Autor: ' +
+			      '<a target="_blank">Parroquia San Pedro Nolasco</a>',
+			    align: 'center'
+			  },
+			  accessibility: {
+			    point: {
+			      valueSuffix: '%'
+			    }
+			  },
+			  tooltip: {
+			    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			  },
+			  plotOptions: {
+			    pie: {
+			      allowPointSelect: true,
+			      cursor: 'pointer',
+			      depth: 35,
+			      dataLabels: {
+			        enabled: true,
+			        format: '{point.name}'
+			      }
+			    }
+			  },	  
+			  
+			  series: [{
+			    type: 'pie',
+			    name: 'Share',	
+			   	    
+			    data: final
+			  }]
+			});
+			
+			}
+			
+			
+			
+			
+			
+		</script>	
+		
+      
+</body>
+
+    <footer th:replace="menu/footer :: footerFragment">		
+	</footer>
+
+</html>

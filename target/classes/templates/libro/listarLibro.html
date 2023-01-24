@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="menu/cabecera :: cabeceraFragment">
+ 	</head>   
+    
+    <body>    
+       <!-- MENU INICIO -->  
+        <div th:replace="menu/menu :: menuFragment">
+ 		</div>
+        <!-- MENU FIN -->
+
+        <div id="main-container">      
+	        
+			<h1 class="texto-titulo" th:text ="${titulo}"></h1>
+            <div  id="fechaactual"><i onclick="actualizar()">HOY: </i></div>
+            
+            <div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning!=null}" th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info!=null}" th:text="${info}"></div>
+            
+            <main>
+            <form th:action="@{/listarLibro}" th:object="${libro}" method="get" >  
+           	<div>
+           		<!-- <select id="filtrarNombre" name="tipoSacramento" >
+						    <option th:value="1" th:text="Bautizo" ></option>
+						    <option th:value="2" th:text="Confirmacion"></option>
+						    <option th:value="3" th:text="Matrimonio"></option>
+				</select>
+           		<a class="btn-buscar" id="btnBuscar1" onclick="buscarNombre();"><img src="../img/buscar.png"  alt="" class="estiloImagenBoton"  >Buscar</a> 
+            	<input type="text" name="numTomo" placeholder="NUMERO TOMO" class="casilla" id="filtro">       	
+            	<a class="btn-buscar" id="btnBuscar" onclick="buscar();"><img src="../img/buscar.png"  alt="" class="estiloImagenBoton" >Todo</a>      -->	       	
+		        <a th:href="@{/formLibro}" style="text-decoration: none" class="btn-nuevo"><img src="../img/nuevo.png"  alt="" class="estiloImagenBoton">Nuevo</a>
+		        
+				<a style="text-decoration: none" class="btn-descarga" onclick="pruebalibro();"><img src="../img/descarga.png" alt="" class="estiloImagenBoton">Descarga</a>        
+               
+		        
+		        </div>
+			</form> 
+			</main>
+            <div>
+                <div class="table-container">
+	                 		
+                    <table class="table-rwd datatable" id="tbTabla">
+						<thead>
+							<tr>
+		                      	<th sec:authorize="hasRole('ROLE_USER')">ID</th>
+		                        <th>Nombre</th>                        
+		                        <th>N Tomo</th>
+		                        <th>Fecha Apertura</th>
+		                        <th>Fecha Cierre</th>
+		                        <th>Num Pags</th>
+								<th>Estado</th>
+								<th sec:authorize="hasRole('ROLE_USER')">Editar</th>
+								<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>	
+                      		</tr>
+						</thead>
+                      <tbody>
+							<tr th:each="libro: ${libros}">
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.id}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.tipoSacramento.nombre}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.numTomo}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.fechaApertura}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.fechaCierre}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.numPaginas}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.estado} ? 'Activo' : 'Cerrado'"></td>
+								<td sec:authorize="hasRole('ROLE_USER')">
+									<a th:href="@{/formLibro/}+${libro.id}"><img src="../img/editar.png"  alt="" class="estiloImagenPequeno"></a>
+								</td>											
+								<td sec:authorize="hasRole('ROLE_ADMIN')">
+									<a th:href="@{/eliminarLibro/}+${libro.id}" onclick="return confirm('Deseas Eliminar?');"><img src="../img/eliminar.png"  alt="" class="estiloImagenPequeno"></a>
+								</td>
+					 		</tr>       
+					  </tbody>
+                                   
+                    </table>
+                  </div>
+                  
+             
+				   
+        </div>
+        
+        <br><br>
+        <div id="reporte">
+		</div> 		
+		
+		</div>		
+        
+        <script type="text/javascript">       
+        
+        function isErrorNotFound(codigoResponse){
+	return (codigoResponse==404);
+}
+        async function obtenerDatosGet(url,callback){
+			 var myHeaders = new Headers();
+			  var myInit = { method: 'GET',
+			                 headers: myHeaders,
+			                 mode: 'cors',
+			                 cache: 'default' };
+			  try {
+			  var myRequest = new Request(url, myInit);
+				let response = await fetch(myRequest);
+				return verificarStatus(response,callback);
+			  }
+				catch (e) {
+					console.log("ERROR : " + e.message);
+				}finally{
+					$('#loader').hide();
+				}
+			}
+		function evaluarAlertaError(codigoResponse,mensaje){
+	if(isErrorNotFound(codigoResponse)){
+		console.log('URL no encontrada');
+	}else{
+		console.log('URL no encontrada');
+	}
+}
+		async function verificarStatus(response,callback){
+			
+			 let jsonResponse = await response.json();
+			 
+			if (!response.ok) {
+				evaluarAlertaError(response.status,jsonResponse.message);
+			    }else{
+			    	if(!objectIsNull(callback)){
+			    		callback(jsonResponse)
+			    	}else{
+			    		return jsonResponse;
+			    	}
+			    }
+		}	
+		async function pruebalibro(){
+			let url =("replibro");
+			let pdfBase = await obtenerDatosGet(url,null);
+				agregarIframePdf("reporte",pdfBase);
+		}
+		function agregarIframePdf(div,pdfBaseObject){
+			document.querySelector("#"+div).innerHTML="";
+			document.querySelector("#"+div).style.height ="40px";
+				document.querySelector("#"+div).style.height ="400px";
+		
+				document.querySelector("#"+div).innerHTML=`<iframe src="data:application/pdf;base64,${pdfBaseObject.pdfBase}" height="100%" width="100%"></iframe>`;
+			
+		}
+		function objectIsNull(value){
+				return (value== undefined || value ==null);
+			}			
+        
+        
+        </script>
+    </body>
+    <footer th:replace="menu/footer :: footerFragment">		
+	</footer>
+</html>

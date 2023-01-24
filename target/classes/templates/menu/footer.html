@@ -1,0 +1,33 @@
+<html>
+	<footer th:fragment="footerFragment">
+		
+		<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" i crossorigin="anonymous"></script>
+			
+		<script>
+            const btn = document.querySelector('#menu-btn');
+            const menu = document.querySelector('#sidemenu');
+            btn.addEventListener('click', e =>{
+                menu.classList.toggle('menu-expanded')
+                menu.classList.toggle('menu-collapsed')
+                document.querySelector('body').classList.toggle('body-expanded');
+            });
+        </script>
+        
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+       
+        <script type="text/javascript">
+        $(document).ready(function(){
+            //jquery for toggle sub menus
+            $('.sub-btn').click(function(){
+            $(this).next('.sub-menu').slideToggle();
+            $(this).find('.dropdown').toggleClass('rotate');
+            });
+        });
+        
+         $(document).ready( function () {
+		    $('#tbTabla').DataTable();
+		} );
+        </script>	
+	</footer>
+	
+</html>

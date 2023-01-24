@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="menu/cabecera :: cabeceraFragment">
+ 	</head>   
+    
+    <body> 
+ 		<!-- MENU INICIO -->  
+        <div th:replace="menu/menu :: menuFragment">
+ 		</div>
+        <!-- MENU FIN -->
+
+        <div id="main-container">        
+	       
+            <!-- 
+            
+            <a th:href="@{/formEmpleado}" class="btn btn-default btn-xs">Crear Empleado</a>
+            <br>
+             -->
+            <h1  class="texto-titulo" th:text ="${titulo}"> </h1>
+            <div  id="fechaactual"><i onclick="actualizar()">HOY: </i></div>
+            
+             <div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning!=null}" th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info!=null}" th:text="${info}"></div>
+		
+            
+            <main>
+               
+           	<div>
+            	<!-- <input type="text" name="dni" placeholder="DNI" class="casilla" id="filtro">
+            	<a style="text-decoration: none" class="btn-buscar" id="btnBuscar" onclick="buscar();"><img src="../img/buscar.png"  alt="" class="estiloImagenBoton">Buscar</a> -->
+		        <a th:href="@{/formEmpleado}" style="text-decoration: none" class="btn-nuevo"><img src="../img/nuevo.png"  alt="" class="estiloImagenBoton">Nuevo</a>					
+				<a style="text-decoration: none" class="btn-descarga" onclick="pruebaempleado();"><img src="../img/descarga.png"  alt="" class="estiloImagenBoton">Descarga</a>			
+			
+			</div>
+		    </main> 
+			
+			
+            <div>                
+               <!-- <a sec:authorize="hasRole('ROLE_ADMIN')"  href="#miModal" class="texto-deco">Crear Empleado</a>
+                --> 
+                <div id="miModal" class="modal">
+                <div class="modal-contenido">
+                    <a href="#" class="texto-deco">X</a>                    
+                    <h2>Empleado</h2>
+					<form class="form-conten">
+                        <label for="firstName" class="first-name">DNI</label>
+	                    <input  type="text" name="nombre" id="nombre" placeholder="Escribe tu nombre">
+	                    <br>
+                        <label for="firstName" class="first-name">Ape Paterno</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+                        <br>
+                        <label for="firstName" class="first-name">Ape Materno</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+	                    <br>
+                        <label for="firstName" class="first-name">Nombres</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+	                    <br>
+                        <label for="firstName" class="first-name">Cargo</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+                        <br>
+                        <label for="firstName" class="first-name">Fecha Nacimiento</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+	                    <br>
+                        <label for="firstName" class="first-name">Celular</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+                        <br>
+	                    <label for="firstName" class="first-name">Direccion</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+                        <br>
+	                    <label for="firstName" class="first-name">Correo</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+                        <br>
+	                    <label for="firstName" class="first-name">Fecha Inicio</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+                        <br>
+	                    <label for="firstName" class="first-name">Fecha Baja</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >
+                        <br>
+                        <label for="firstName" class="first-name">Estado</label>
+	                    <input type="text" name="" placeholder="" class="casilla" >	                    
+               		</form>
+                </div>  
+                </div>
+            </div>
+            
+            <br>
+            
+            <div>
+                <div class="table-container">
+                    <table class="table-rwd datatable" id="tbTabla">
+					<thead>
+						 <tr>
+                      	<th sec:authorize="hasRole('ROLE_USER')">ID</th>
+                        <th>DNI</th>
+						<th>A Paterno</th>
+						<th>A Materno</th>
+						<th>Nombres</th>
+						<th>Cargo</th>
+						<th>Fecha Nacimiento</th>
+						<th>Celular</th>
+						<th>Direccion</th>
+						<th>Correo</th>					
+						<th>Fecha Inicio</th>
+						<th>Fecha Baja</th>
+						<th>Estado</th>
+						<th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+						<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>					
+                      </tr>
+					</thead>
+					<tbody>
+						  <tr th:each="empleado: ${empleados}">
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.id}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.dni}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.apePaterno}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.apeMaterno}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.nombres}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.cargoId.nombre}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.fechasNacimiento}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.celular}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.direccion}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.correo}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.fechaInicio}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.fechaBaja}"></td>
+						<td sec:authorize="hasRole('ROLE_USER')" th:text="${empleado.estado} ? 'Activo' : 'Baja'"></td>
+						<td sec:authorize="hasRole('ROLE_USER')">
+							<a th:href="@{/formEmpleado/}+${empleado.id}"><img src="../img/editar.png"  alt="" class="estiloImagenPequeno"></a>
+						</td>											
+						<td sec:authorize="hasRole('ROLE_ADMIN')">
+							<a th:href="@{/eliminarEmpleado/}+${empleado.id}" onclick="return confirm('Deseas Eliminar?');"><img src="../img/eliminar.png"  alt="" class="estiloImagenPequeno"></a>
+						</td>
+						
+					   </tr>       
+					</tbody>
+                     
+                                
+                    </table>
+                  </div>
+            </div>
+            
+            <br><br>
+	        <div id="reporte">
+			</div> 	
+			
+        </div>
+         
+
+        <script type="text/javascript">       
+        
+		        function isErrorNotFound(codigoResponse){
+			return (codigoResponse==404);
+		}
+		        async function obtenerDatosGet(url,callback){
+					 var myHeaders = new Headers();
+					  var myInit = { method: 'GET',
+					                 headers: myHeaders,
+					                 mode: 'cors',
+					                 cache: 'default' };
+					  try {
+					  var myRequest = new Request(url, myInit);
+						let response = await fetch(myRequest);
+						return verificarStatus(response,callback);
+					  }
+						catch (e) {
+							console.log("ERROR : " + e.message);
+						}finally{
+							$('#loader').hide();
+						}
+					}
+				function evaluarAlertaError(codigoResponse,mensaje){
+			if(isErrorNotFound(codigoResponse)){
+				console.log('URL no encontrada');
+			}else{
+				console.log('URL no encontrada');
+			}
+		}
+				async function verificarStatus(response,callback){
+					
+					 let jsonResponse = await response.json();
+					 
+					if (!response.ok) {
+						evaluarAlertaError(response.status,jsonResponse.message);
+					    }else{
+					    	if(!objectIsNull(callback)){
+					    		callback(jsonResponse)
+					    	}else{
+					    		return jsonResponse;
+					    	}
+					    }
+				}	
+				async function pruebaempleado(){
+					let url =("repempleado");
+					let pdfBase = await obtenerDatosGet(url,null);
+						agregarIframePdf("reporte",pdfBase);
+				}
+				function agregarIframePdf(div,pdfBaseObject){
+					document.querySelector("#"+div).innerHTML="";
+					document.querySelector("#"+div).style.height ="40px";
+						document.querySelector("#"+div).style.height ="400px";
+				
+						document.querySelector("#"+div).innerHTML=`<iframe src="data:application/pdf;base64,${pdfBaseObject.pdfBase}" height="100%" width="100%"></iframe>`;
+					
+				}
+				function objectIsNull(value){
+						return (value== undefined || value ==null);
+					}			
+		        
+        
+        </script>    
+    </body>
+    <footer th:replace="menu/footer :: footerFragment">		
+	</footer>
+</html>

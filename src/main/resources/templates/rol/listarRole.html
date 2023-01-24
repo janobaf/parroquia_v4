@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="menu/cabecera :: cabeceraFragment">
+ 	</head>
+    
+    <body>    
+        <!-- MENU INICIO -->  
+        <div th:replace="menu/menu :: menuFragment">
+ 		</div>       
+        <!-- MENU FIN -->
+
+        <div id="main-container">      
+			  
+	        <h1 class="texto-titulo" th:text ="${titulo}"></h1>
+            <div  id="fechaactual"><i onclick="actualizar()">HOY: </i></div>
+            
+            <div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
+			<div class="alert alert-danger" th:if="${error!=null}" th:text="${error}"></div>
+			<div class="alert alert-warning" th:if="${warning!=null}" th:text="${warning}"></div>
+			<div class="alert alert-info" th:if="${info!=null}" th:text="${info}"></div>
+            
+            <main>
+            <form th:action="@{/listarRole}" th:object="${role}" method="get" >  
+           	<div> 	       	
+		        <a th:href="@{/formRole}" style="text-decoration: none" class="btn-nuevo"><img src="../img/nuevo.png"  alt="" class="estiloImagenBoton">Nuevo</a>     
+               
+		        
+		        </div>
+			</form> 
+			</main>
+            
+            <div >
+                <div class="table-container">
+                     <table class="table-rwd datatable" id="tbTabla">
+						 <thead>
+							 <tr>
+		                      	<th sec:authorize="hasRole('ROLE_ADMIN')">ID</th>
+								<th sec:authorize="hasRole('ROLE_ADMIN')">User</th>
+								<th sec:authorize="hasRole('ROLE_ADMIN')">Rol</th>						
+								<th sec:authorize="hasRole('ROLE_ADMIN')">Editar</th>
+								<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>						
+		                      </tr>
+						 </thead>
+						 <tbody>
+							  <tr th:each="role: ${roles}">                      
+									<td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${role.id}"></td>
+									<td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${role.usuario.username}"></td>			
+									<td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${role.authority}"></td>	
+									<td sec:authorize="hasRole('ROLE_ADMIN')" >
+										<a th:href="@{/formRole/}+${role.id}"><img src="../img/editar.png"  alt="" class="estiloImagenPequeno"></a>
+									</td>											
+									<td sec:authorize="hasRole('ROLE_ADMIN')">
+										<a th:href="@{/eliminarRole/}+${role.id}" onclick="return confirm('Deseas Eliminar?');"><img src="../img/eliminar.png"  alt="" class="estiloImagenPequeno"></a>
+									</td>
+							  </tr>  
+						 </tbody>
+                                      
+                    </table>
+                  </div>
+            </div>
+        </div>
+           
+     </body>
+     
+    <footer th:replace="menu/footer :: footerFragment">		
+	</footer>
+</html>

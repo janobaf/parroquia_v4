@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+	<head th:replace="menu/cabecera :: cabeceraFragment">
+ 	</head>
+
+<body>
+ 		<!-- MENU INICIO -->  
+        <div th:replace="menu/menu :: menuFragment">
+ 		</div>
+        <!-- MENU FIN -->
+      
+	 	<div id="main-container" sec:authorize="hasRole('ROLE_USER')">
+			 <h1 class="texto-titulo" th:text ="${titulo}"></h1>
+		 	 <div id="fechaactual"><i onclick="actualizar()">HOY: </i></div>
+		 		
+			<main>
+				<form  th:action="@{/reportMes}"method="GET">
+					<select name="id" style="text-transform:uppercase" >
+						<option value="13" > TODOS </option>
+						<option value="01" >enero</option>
+						<option value="02" >febrero</option>
+						<option value="03" >marzo</option>
+						<option value="04" >abril</option>
+						<option value="05" >mayo</option>
+						<option value="06" >junio</option>
+						<option value="07" >julio</option>
+						<option value="08" >agosto</option>
+						<option value="09" >septiembre</option>
+						<option value="10" >octubre</option>
+						<option value="11" >noviembre</option>
+						<option value="12" >diciembre</option>
+					</select>
+					
+					 <select name="anio">
+					    <script>
+					     var d = new Date();
+					     var n = d.getFullYear();
+					       for(var i = n; i >=2020; i--)
+					           document.write('<option  th:value=i >'+i+'</option>');
+					    </script>
+					 </select>
+					 
+					<input type="submit" value="aceptar" > 
+					<a class="btn-buscar"  value="aceptar" id="btnBuscar" ><img src="../img/buscar.png"  alt="" class="estiloImagenBoton" >Todo</a>            	
+					<a style="text-decoration: none" class="btn-descarga" onclick="replibroMensual();"><img src="../img/descarga.png" alt="" class="estiloImagenBoton">Descarga</a>        
+               </form>					
+			</main>
+
+	 		
+            <br>
+             
+	 		<div>				
+				<div>
+		                  <table class="table">
+								  <thead>
+									  <tr >
+										 <th>
+											 <label th:each="lista : ${surveyMap.keySet()}" style="text-align: center">
+											 <h3 th:text="${lista}"></h3>
+											 </label>
+										</th>
+										
+								 	</tr>
+								  </thead>
+								 <tbody>
+									 <tr>	
+										 <th>
+											<label th:each="lista : ${surveyMap.values()}" style="text-align: center">									
+											<h5 th:text="${lista}"></h5>
+											</label>
+										</th>							
+									</tr>		
+								 </tbody> 		                   
+		                   </table>
+		               
+					 </div>	
+					 
+					<br><br>
+							
+					<div>
+				       <div id="container" style="width: 90%; height: 90%; margin: 0 auto overflow-x: auto;">
+						</div>	 	
+		            </div> 
+            </div>	
+            
+            
+               
+            </div>	 			
+	 	</div>
+	 	
+		<script th:inline="javascript">
+	    $(function(){
+	    Highcharts.chart('container', {
+	        chart: {
+	            type: 'column'
+	        },
+	        title: {
+	            text: 'Reporte Mensual Registro Libros de los Sacramentos'
+	        },
+	         subtitle: {
+			    text: 'Autor: ' +
+			      '<a target="_blank">Parroquia San Pedro Nolasco</a>',
+			    align: 'left'
+			  },
+	        xAxis: {
+	            categories: [[${surveyMap.keySet()}]],
+	            crosshair: true
+	        },
+	        yAxis: {
+	            min: 0,
+	            max:100,	            
+	            title: {
+	                text: 'Procentaje (%)'
+	            }
+	        },
+	        tooltip: {
+	            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	            '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+	            footerFormat: '</table>',
+	            shared: true,
+	            useHTML: true
+	        },
+	        plotOptions: {
+	            column: {
+	                pointPadding: 0.2,
+	                borderWidth: 0
+	            }
+	        },
+	        series: [{
+	            name: 'Sacramento',
+	            data: [[${surveyMap.values()}]]
+	        }]
+	    });
+	    });
+		</script>
+
+</body>
+<footer th:replace="menu/footer :: footerFragment">		
+</footer>
+
+</html>
