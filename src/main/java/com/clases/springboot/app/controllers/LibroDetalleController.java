@@ -58,9 +58,12 @@ public class LibroDetalleController {
 	}
 	
 	@RequestMapping(value= {"/listarLibroMatrimonio"}, method=RequestMethod.GET)
-	public String listarLibroMatrimonio(Model model) {
-		model.addAttribute("titulo", "Registro Libros Matrimonio");
-		model.addAttribute("librosMatrimonio", libroDetalleService.findAll());
+	public String listarMatrimonio(Model model) {
+		model.addAttribute("titulo", "Registro Libros Matrimoio");
+		Tipo tipoSacramento=new Tipo();
+		tipoSacramento.setId(Long.valueOf(3));
+		List<LibroDetalle> findByIdLibroTipoSacramento = libroDetalleService.findByIdLibroTipoSacramento(tipoSacramento);
+		model.addAttribute("listarMatrimonio", findByIdLibroTipoSacramento);
 		return "libroDetalle/listarLibroMatrimonio";
 	}
 	

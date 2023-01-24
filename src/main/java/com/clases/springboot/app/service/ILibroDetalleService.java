@@ -29,4 +29,6 @@ public interface ILibroDetalleService {
 	public Report reporteLibroBautizoPorPersona(Long idDetalleLibro)throws Exception,JRException, IOException,  ParseException, DocumentException;
 
 	public Report reporteLibroConfirmacionPorPersona(Long idDetalleLibro)throws Exception,JRException, IOException,  ParseException, DocumentException;
+	
+	//public Report reporteLibroMatrimonioPorPersona(Long idDetalleLibro)throws Exception,JRException, IOException,  ParseException, DocumentException;
 }

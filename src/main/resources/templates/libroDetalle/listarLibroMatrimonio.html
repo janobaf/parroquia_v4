@@ -45,25 +45,25 @@
 		                      </tr>
 						</thead>
 						<tbody>
-							<tr th:each="libroBautizo: ${librosBautizo}">
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.id}"></td>
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.idCliente.dni}"></td>
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.idCliente.apePaterno} + ' ' + ${libroBautizo.idCliente.apeMaterno} + ' '  + ${libroBautizo.idCliente.nombre} "></td>
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.numRegistro}"></td>
-								<!-- <td sec:authorize="hasRole('ROLE_USER')" th:text=" ${libroBautizo.idLibro.tipoSacramento.nombre} "></td> -->
-								<td sec:authorize="hasRole('ROLE_USER')" th:text=" ${libroBautizo.idLibro.numTomo} "></td>
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.numPag}"></td>
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.parroco.apePaterno} + ' ' + ${libroBautizo.parroco.apeMaterno} + ' ' +${libroBautizo.parroco.nombres}"></td>
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.fechaSacramento}"></td>
-								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libroBautizo.bautizo} ? 'Registrado' : 'Proceso'"></td>
+							<tr th:each="listarMatrimonio: ${listarMatrimonio}">
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.id}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.idCliente.dni}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.idCliente.apePaterno} + ' ' + ${listarMatrimonio.idCliente.apeMaterno} + ' '  + ${listarMatrimonio.idCliente.nombre} "></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.numRegistro}"></td>
+								<!-- <td sec:authorize="hasRole('ROLE_USER')" th:text=" ${listarMatrimonio.idLibro.tipoSacramento.nombre} "></td> -->
+								<td sec:authorize="hasRole('ROLE_USER')" th:text=" ${listarMatrimonio.idLibro.numTomo} "></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.numPag}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.parroco.apePaterno} + ' ' + ${listarMatrimonio.parroco.apeMaterno} + ' ' +${listarMatrimonio.parroco.nombres}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.fechaSacramento}"></td>
+								<td sec:authorize="hasRole('ROLE_USER')" th:text="${listarMatrimonio.bautizo} ? 'Registrado' : 'Proceso'"></td>
 								<td sec:authorize="hasRole('ROLE_USER')">
-									<a th:href="@{/formLibroBautizo/}+${libroBautizo.id}"><img src="img/editar.png"  alt="" class="estiloImagenPequeno"></a>
+									<a th:href="@{/formLibroMatrimonio/}+${listarMatrimonio.id}"><img src="img/editar.png"  alt="" class="estiloImagenPequeno"></a>
 								</td>											
 								<td sec:authorize="hasRole('ROLE_ADMIN')">
 									<a  onclick="return confirm('Deseas Eliminar?');"><img src="../img/eliminar.png"  alt="" class="estiloImagenPequeno"></a>
 								</td>
 								<td>
-									<a th:onclick="|pruebalibroBautizo(${libroBautizo.id});|"><img src="../img/descarga.png"  alt="" class="estiloImagenPequeno"></a>						
+									<a th:onclick="|pruebalibroMatrimonio(${listarMatrimonio.id});|"><img src="../img/descarga.png"  alt="" class="estiloImagenPequeno"></a>						
 								</td>
 							</tr>        
 						</tbody>
@@ -120,8 +120,8 @@
 			    	}
 			    }
 		}	
-		async function pruebalibroBautizo(id){
-			let url =("replibroBautizoPersona/"+id);
+		async function pruebalibroMatrimonio(id){
+			let url =("replibroMatrimonioPersona/"+id);
 			let pdfBase = await obtenerDatosGet(url,null);
 				agregarIframePdf("reporte",pdfBase);
 		}
