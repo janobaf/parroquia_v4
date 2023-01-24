@@ -27,39 +27,40 @@
             
             
            <main>
-           <form th:action="@{/formEmpleado}" th:object="${empleado}" method="post">
-			   
-			   
-		  		<div>
-					<label >DNI 
-						<a style="text-decoration: none" class="btn-buscar" id="btnBuscar" onclick="traer()"><img src="../img/buscar.png" alt="" class="estiloImagenBoton">Buscar</a>				
-					</label>
-					<div >		
-						<input class="casilla" type="text" th:field="*{dni}" autofocus />
+           
+			<label >DNI 
+				<a style="text-decoration: none" class="btn-buscar" id="btnBuscar" onclick="traer()"><img src="../img/buscar.png" alt="" class="estiloImagenBoton">Buscar</a>
+								
+			</label>
+			
+			<form th:action="@{/formEmpleado}" th:object="${empleado}" method="post">
+				<div>				
+					<div>		
+						<input type="text" id="dni"class="casilla"  th:field="*{dni}" autofocus />
 						<small class="form-text text-danger" ></small>
 					</div>
 				</div>
 				<div >
-					<label>Apellido Paterno</label>
+					<label >Apellido Paterno</label>
 					<div>		
-						<input class="casilla" type="text" th:field="*{apePaterno}"  />
+						<input type="text" class="casilla" id="ApellidoPaterno" th:field="*{apePaterno}" />
 						<small class="form-text text-danger" ></small>
 					</div>
 				</div>
-				<div>
+				<div >
 					<label >Apellido Materno</label>
-					<div >		
-						<input class="casilla" type="text" th:field="*{apeMaterno}"  />
+					<div>		
+						<input type="text" class="casilla" id="apellidoMaterno" th:field="*{apeMaterno}"  />
 						<small class="form-text text-danger" ></small>
 					</div>
 				</div>
-				<div>
+				<div >
 					<label>Nombre</label>
-					<div >		
-						<input class="casilla" type="text" th:field="*{nombres}"  />
+					<div>		
+						<input type="text" id="nombre" class="casilla" th:field="*{nombres}"  />
 						<small class="form-text text-danger" ></small>
 					</div>
-				</div>
+				</div>		
 				<div>
 					<label>Cargo</label>
 					<div >		
@@ -137,8 +138,9 @@
             
         </div>
 
-             
-        <script >
+
+		<script >
+	
 			function servidorEmergente(){
 				var dni = document.getElementById('dni').value;
 				var proxyUrl = 'https://apiperu.dev/api/dni/'+dni+'?api_token=b064c85c2c4575b6a0b08bb1a8a31cc9a2dcb6e77086088af3675420c7076b43';
@@ -154,28 +156,27 @@
 						ApellidoPaterno.value =  data['data']['apellido_paterno'];
 						var nombre = document.getElementById("nombre");
 						nombre.value =  data['data']['nombres']
+
 					}
 					else {
 						alert("dni no existe")
-					}					
-				
+					}
 				})
 				.catch(e => {
-					alert("DNI NO EXISTE");
-	
+					alert("DNI NO EXISTE");	
 					document.getElementById("error").innerHTML = "no se encontro el dni ";
-				});
-	
-			  }			
+				});	
+			  }
 			
 			  function  traer() {
 				var dni = document.getElementById("dni").value;
 				if(dni.length > 0 && dni.length ==8 && !isNaN(dni)) {
-					var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
+					var proxyUrl = 'https://desolate-meadow-71010.herokuapp.com/',
 					targetUrl = 'https://api.apis.net.pe/v1/dni?numero='+dni;
 					fetch(proxyUrl+targetUrl)
-					.then(blob =>blob.json())            
+					.then(blob =>blob.json() )            
 					.then(data => {
+						
 						if(!data['error']) {
 							var apellidoMaterno = document.getElementById("apellidoMaterno");
 							apellidoMaterno.value =  data['apellidoMaterno'];
@@ -183,15 +184,17 @@
 							ApellidoPaterno.value =  data['apellidoPaterno'];
 							var nombre = document.getElementById("nombre");
 							nombre.value =  data['nombres'];
-						}
+						}	
 					})	
 					.catch(e => {
+						console.log(data);
 						alert("error");
-						servidorEmergente();
+					//	servidorEmergente();
 					});
 				}
 				else { alert("DNI no tiene suficientes letras o no el dni no es numerico"); }
-								
+				
+				
 			}
 	
 		  </script>
