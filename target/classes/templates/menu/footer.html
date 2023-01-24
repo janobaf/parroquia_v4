@@ -40,10 +40,10 @@
 				.then(data => {
 					if(data['success']==true)
 					{
-						var dni = ""
+						
 						var apellidoMaterno = document.getElementById("apellidoMaterno");
 						apellidoMaterno.value =  data['data']['apellido_materno'];
-						var ApellidoPaterno = document.getElementById("ApellidoPaterno");
+						var ApellidoPaterno = document.getElementById("ApelidoPaterno");
 						ApellidoPaterno.value =  data['data']['apellido_paterno'];
 						var nombre = document.getElementById("nombre");
 						nombre.value =  data['data']['nombres']
