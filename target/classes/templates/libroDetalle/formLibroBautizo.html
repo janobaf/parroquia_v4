@@ -52,7 +52,7 @@
                             <input type="text" name="observacion" th:field="*{observacion}" id="" class="casilla"> 
 				</br></br> 				
 				<h3 style="border-bottom: solid 1px rgb(20, 0, 0)">Informacion del Libro</h3>
-				<br>				
+				<br>		
                             <label for="Libro">Libro</label>
                             <input type="text" name="nombre" id="" placeholder="" class="casilla" th:field="*{idLibro.id}">
                             </br>
@@ -61,6 +61,13 @@
                             </br>
                             <label for="NroPagina">Nro de Pagina</label>
                             <input  type="number" min="1" name="nropagina" id="" placeholder="" class="casilla" th:field="*{numPag}" >
+                            </br>
+                            <label for="estado">Estado</label>
+                            <select id="parroco" name="parroco" th:field="*{bautizo}" >
+							    <option value="0">Proceso</option>
+							    <option value="1">Registrado</option>
+							</select>
+											
 				
 				 <input type="submit" value="Guardar" class="btn-guardar"/>
 				 <input type="hidden" th:field="*{id}" />
