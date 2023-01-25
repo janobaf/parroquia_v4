@@ -77,6 +77,29 @@ public class LibroDetalleController {
 		return "libroDetalle/formLibroBautizo";
 	}
 	
+	
+	@RequestMapping(value="/formLibroBautizo/{id}" )
+	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model,RedirectAttributes f) {
+		LibroDetalle libroBautizo = null;		
+		if (id>0) {
+			libroBautizo = libroDetalleService.findById(id);
+			if(libroBautizo == null) {
+				f.addFlashAttribute("error","El ID del Libro no existe en la BD");
+				return "redirect:/libroDetalle/formLibroBautizo";
+			}
+		}
+		else {
+			f.addFlashAttribute("error","El ID del Libro no puede ser cero!");
+			return "redirect:/libroDetalle/formLibroBautizo";			
+		}
+		model.put("librosBautizo", libroBautizo);
+		model.put("titulo", "Editar Libro");
+		return "libroDetalle/formLibroBautizo";
+	}
+	
+	
+	
+	
 	@RequestMapping(value= {"/formLibroConfirmacion"} )
 	public String crearConfirmacion(Map<String, Object> model) {
 		model.put("titulo", "Formulario de Libro Confirmacion");		
@@ -107,26 +130,7 @@ public class LibroDetalleController {
 	}
 
 
-	@RequestMapping(value="formLibroBautizo/{id}" )
-	public String editar (@PathVariable(value="id") Long id, Map<String, Object> model,RedirectAttributes f) {
-		LibroDetalle libroDetalle = null;
-		
-		if (id>0) {
-			libroDetalle = libroDetalleService.findById(id);
-			if(libroDetalle == null) {
-				f.addFlashAttribute("error","El ID del Libro no existe en la BD");
-				return "libroDetalle/listarLibroDetalle";
-			}
-		}
-		else {
-			f.addFlashAttribute("error","El ID del Libro no puede ser cero!");
-			return "libroDetalle/listarLibroDetalle";
-			
-		}
-		model.put("libroDetalle", libroDetalle);
-		model.put("titulo", "Editar Libro");
-		return "libroDetalle/formLibroBautizo";
-	}
+
 	
 	//listar por tomo
 		@RequestMapping(value="listarLibroBautizo/{sacramento}", method=RequestMethod.GET)
@@ -144,7 +148,7 @@ public class LibroDetalleController {
 		@GetMapping("/replibroBautizoPersona/{id}")
 		@ResponseBody
 		public Report reporteLibroBautizoPorPersona(@PathVariable Long id) throws JRException, IOException, ParseException, DocumentException, Exception{
-			
+		
 			return libroDetalleService.reporteLibroBautizoPorPersona(id);
 		}
 		

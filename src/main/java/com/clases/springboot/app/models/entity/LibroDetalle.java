@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="libro_detalle")
@@ -24,6 +25,7 @@ public class LibroDetalle implements Serializable {
 	@JoinColumn(name = "cliente", nullable = false)
 	private Cliente idCliente;
 	
+	@NotNull
 	@Column(name="fecha_sacramento")
 	private String fechaSacramento;
 	
@@ -35,12 +37,19 @@ public class LibroDetalle implements Serializable {
 	@JoinColumn(name = "libro", nullable = false)
 	private Libro idLibro;	
 	
+	
 	@Column(name="num_pag")
 	private String numPag;
 	
 	@Column(name="num_registro")
 	private String numRegistro;	
 
+	@Column(name="padre")
+	private String padre;		
+	
+	@Column(name="madre")
+	private String madre;	
+	
 	@Column(name="esposo")
 	private String esposo;	
 	
@@ -231,6 +240,23 @@ public class LibroDetalle implements Serializable {
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
+	
+	public String getPadre() {
+		return padre;
+	}
+
+	public void setPadre(String padre) {
+		this.padre = padre;
+	}
+
+	public String getMadre() {
+		return madre;
+	}
+
+	public void setMadre(String madre) {
+		this.madre = madre;
+	}
+
 
 	
 }
