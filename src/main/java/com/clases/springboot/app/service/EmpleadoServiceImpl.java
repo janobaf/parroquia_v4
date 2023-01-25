@@ -11,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clases.springboot.app.models.dao.ClienteRepository;
 import com.clases.springboot.app.models.dao.EmpleadoRepository;
 import com.clases.springboot.app.models.dao.IEmpleadoDao;
 import com.clases.springboot.app.models.entity.Empleado;
-import com.clases.springboot.app.models.entity.Libro;
 import com.clases.springboot.app.models.entity.Report;
 import com.inagro.springboot.backend.apirest.util.Util;
 import com.inagro.springboot.backend.apirest.util.UtilFormat;
@@ -273,6 +271,11 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 		cabeceraTable.addCell(cell);
 		return cabeceraTable;
 	}
-	
+
+	/*@Override
+	public List<Empleado> findByCargoIdAndEstado(String estado) {
+			return (List<Empleado>)empleadoDao.findByCargoIdAndEstado(estado);
+	}
+	*/
 
 }

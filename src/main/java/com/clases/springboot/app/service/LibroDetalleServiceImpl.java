@@ -12,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.clases.springboot.app.models.dao.IClienteDao;
 import com.clases.springboot.app.models.dao.ILibroDetalleDao;
 import com.clases.springboot.app.models.dao.LibroDetalleRepository;
+import com.clases.springboot.app.models.entity.Cliente;
+import com.clases.springboot.app.models.entity.Empleado;
 import com.clases.springboot.app.models.entity.LibroDetalle;
 import com.clases.springboot.app.models.entity.Report;
 import com.clases.springboot.app.models.entity.Tipo;
@@ -46,6 +49,9 @@ public class LibroDetalleServiceImpl implements ILibroDetalleService {
 	@Autowired
 	private ILibroDetalleDao libroDetalleDao;
 	
+	@Autowired
+	private IClienteDao clienteDao;
+	
 	
 	private String tempPath = System.getProperty("java.io.tmpdir");
 
@@ -71,15 +77,29 @@ public class LibroDetalleServiceImpl implements ILibroDetalleService {
 	@Transactional
 	@Override
 	public void save(LibroDetalle libroDetalle) {
+		List<Cliente> findByDni = clienteDao.findByDni(libroDetalle.getIdCliente().getDni());
+		if(findByDni.size()==0) {
+			clienteDao.save(libroDetalle.getIdCliente());
+		}else {
+			Cliente clienteNew = libroDetalle.getIdCliente();
+			
+			clienteNew.setId(findByDni.get(0).getId());
+		}
 		libroDetalleDao.save(libroDetalle);		
 	}
 
+	
+	
+	
+	
 	
 	@Transactional(readOnly=true)
 	@Override
 	public List<LibroDetalle> buscarPorLibroDetalle(String dni) {
 		return (List<LibroDetalle>) libroDetalleDao.buscarPorLibroDetalleDni(dni);
 	}
+	
+	
 	
 	@Transactional(readOnly=true)
 	@Override

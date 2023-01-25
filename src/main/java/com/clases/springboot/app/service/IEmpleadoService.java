@@ -23,4 +23,6 @@ public interface IEmpleadoService {
 	void deleteById(Long id);
 	
 	public List<Empleado> buscarPorDNI(String DNI);
+	
+	//public List<Empleado> findByCargoIdAndEstado(String estado);
 }

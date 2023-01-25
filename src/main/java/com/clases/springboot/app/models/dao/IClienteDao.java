@@ -12,5 +12,7 @@ public interface IClienteDao extends CrudRepository<Cliente, Long> {
 	
 	@Query(value="SELECT * FROM cliente where(dni= :dni or :dni = 'DNI')  ",nativeQuery=true)	
 	public List<Cliente> buscarPorDNI(@Param("dni") String DNI);
+	
+	public List<Cliente> findByDni(String dni);
 
 }

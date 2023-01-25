@@ -103,7 +103,7 @@ public class LibroDetalleController {
 		libroDetalleService.save(libroDetalle);
 		status.setComplete();
 		f.addFlashAttribute("success","Grabado con exito");
-		return "redirect:libroDetalle/listarLibroBautizo";
+		return "redirect:listarLibroBautizo";
 	}
 
 
@@ -149,7 +149,7 @@ public class LibroDetalleController {
 		}
 		
 		
-		@GetMapping("/replibroConfirmacionPersona{id}")
+		@GetMapping("/replibroConfirmacionPersona/{id}")
 		@ResponseBody
 		public Report reportelibroConfirmacionPersona(@PathVariable Long id) throws JRException, IOException, ParseException, DocumentException, Exception{
 			

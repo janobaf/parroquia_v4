@@ -22,15 +22,15 @@ public class Cliente implements Serializable {
 	@Column(name="dni")
 	private String dni;	
 
-	@NotEmpty
+	
 	@Column(name="nombre")
 	private String nombre;	
 		
-	@NotEmpty
+	
 	@Column(name="ape_paterno")
 	private String apePaterno;
 	
-	@NotEmpty
+	
 	@Column(name="ape_materno")
 	private String apeMaterno;	
 	
@@ -40,7 +40,7 @@ public class Cliente implements Serializable {
 	@Column(name="sexo")
 	private String sexo;
 	
-	@NotEmpty
+	
 	@Column(name="celular1")
 	private String celular1;
 	

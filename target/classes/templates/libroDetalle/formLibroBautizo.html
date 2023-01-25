@@ -15,43 +15,31 @@
             </div>           
              
             <main>
-				<form th:action="@{/formlibrosBautizo}" th:object="${librosBautizo}" method="post">
+				<form th:action="@{/formLibroBautizo}" th:object="${librosBautizo}" method="post">
 				<h3 style="border-bottom: solid 1px rgb(20, 0, 0)">Informacion de Bautizando</h3>
 				<br>                       
                             <label for="DNI" >DNI</label>
+                            <input type="hidden" name="idCliente" id="idCliente" placeholder="" class="casilla" th:field="*{idCliente.id}" autofocus >
                             <input type="text" name="dni" id="dni" placeholder="" class="casilla" th:field="*{idCliente.dni}" autofocus >
-                            <a style="text-decoration: none" class="btn-buscar" id="btnBuscar" onclick="traer()"><img src="../img/buscar.png" alt="" class="estiloImagenBoton">Buscar</a>
-							</a>							
-							
-                            <input type="text" class="casilla" disabled="disabled" id="ApellidoPaterno" th:field="*{idCliente.apePaterno}"/>
-                            <input type="text" class="casilla" disabled="disabled" id="apellidoMaterno" th:field="*{idCliente.apeMaterno}"/>
-                            <input type="text" class="casilla" disabled="disabled" id="nombre" th:field="*{idCliente.nombre}"/>                            
-                            <a id="btnBuscar"><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas">
-                            
                             </br>
                             <label for="Padre">Padre</label>
-                            <input type="text" name="padre" id="" placeholder="" class="casilla">                            
-                            <a href=""><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas"></a>
+                            <input type="text" name="padre" id="" placeholder="" class="casilla">               
                             </br>
                             <label for="Madre">Madre</label>
-                            <input type="text" name="madre" id="" placeholder="" class="casilla">                            
-                            <a href=""><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas"></a>
+                            <input type="text" name="madre" id="" placeholder="" class="casilla">             
                             </br> 
                             <label for="Padrino">Padrino</label>
                             <input type="text" name="padrino" id="" placeholder="" class="casilla">
-                            <a href=""><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas"></a>
                             </br>
                             <label for="Madrina">Madrina</label>
                             <input type="text" name="madrina" id="" placeholder="" class="casilla"> 
                             <a href=""><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas"></a>
                             </br>
                             <label for="Parroco">Parroco</label>
-                            <input type="text" name="dni" id="dni" placeholder="" class="casilla" th:field="*{parroco.dni}" autofocus >
-                            <a href=""><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas"></a>
-                            <input type="text" class="casilla" disabled="disabled" id="ApellidoPaterno" th:field="*{parroco.apePaterno}"/>
-                            <input type="text" class="casilla" disabled="disabled" id="apellidoMaterno" th:field="*{parroco.apeMaterno}"/>
-                            <input type="text" class="casilla" disabled="disabled" id="nombre" th:field="*{parroco.nombres}"/>                            
-                            <a id="btnBuscar" ><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas">
+                            <select id="parroco" name="parroco" th:field="*{parroco.id}" >
+							    <option value="1">1</option>
+							</select>
+                            <!-- <input type="text" name="dni" id="dni" placeholder="" class="casilla" th:field="*{parroco.id}" autofocus > -->
                             </br> 
                             <label for="FechaBautizo">Fecha de Bautizo</label>
                             <input type="text" name="fechabautizo" id="" placeholder="aaaa-mm-dd" class="casilla"> 
@@ -62,13 +50,13 @@
 				<h3 style="border-bottom: solid 1px rgb(20, 0, 0)">Informacion del Libro</h3>
 				<br>				
                             <label for="Libro">Libro</label>
-                            <input type="text" name="nombre" id="" placeholder="" class="casilla">
+                            <input type="text" name="nombre" id="" placeholder="" class="casilla" th:field="*{idLibro.id}">
                             </br>
                             <label for="NroRegistro">Nro de Registro</label>
-                            <input type="text" name="nroregistro" id="" placeholder="" class="casilla" > 
+                            <input type="text" name="nroregistro" id="" placeholder="" class="casilla" th:field="*{numRegistro}"  > 
                             </br>
                             <label for="NroPagina">Nro de Pagina</label>
-                            <input  type="number" min="1" name="nropagina" id="" placeholder="" class="casilla">
+                            <input  type="number" min="1" name="nropagina" id="" placeholder="" class="casilla" th:field="*{numPag}" >
 				
 				 <input type="submit" value="Guardar" class="btn-guardar"/>
 				 <input type="hidden" th:field="*{id}" />

@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.clases.springboot.app.models.dao.IClienteDao;
 import com.clases.springboot.app.models.dao.ClienteRepository;
 import com.clases.springboot.app.models.entity.Cliente;
-import com.clases.springboot.app.models.entity.Libro;
 import com.clases.springboot.app.models.entity.Report;
 import com.inagro.springboot.backend.apirest.util.Util;
 import com.inagro.springboot.backend.apirest.util.UtilFormat;
@@ -79,6 +78,7 @@ public class ClienteServiceImpl implements IClienteService {
 	@Transactional
 	@Override
 	public void save(Cliente cliente) {
+		
 		clienteDao.save(cliente);
 		
 	}
@@ -341,5 +341,17 @@ public class ClienteServiceImpl implements IClienteService {
 		cabeceraTable.addCell(cell);
 		return cabeceraTable;
 	}
+
+	@Override
+	public List<Cliente> findByDni(String dni) {
+		return (List<Cliente>)clienteDao.findByDni(dni);
+
+	}
+	
+	
+	
+	
+	
+	
 
 }
