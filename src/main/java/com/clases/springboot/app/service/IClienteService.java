@@ -28,4 +28,6 @@ public interface IClienteService {
 	public String exportReport(String reportFormat) throws FileNotFoundException, JRException, IOException,Exception;
 	
 	public String base64Clientes(String format) throws FileNotFoundException, JRException;
+	
+	public List<Cliente> findByDni(String dni);
 }
