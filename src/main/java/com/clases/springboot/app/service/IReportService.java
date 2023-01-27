@@ -12,6 +12,7 @@ public interface IReportService {
 	
 	public Report reportePrueba()throws Exception,  JRException, IOException, ParseException, DocumentException;
 
-	
+	public Report reporteLibroDetalleByAnioAndMes(int anio,int mes)throws Exception,  JRException, IOException, ParseException, DocumentException;
+
 	
 }

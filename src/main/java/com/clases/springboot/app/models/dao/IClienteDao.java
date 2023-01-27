@@ -15,4 +15,6 @@ public interface IClienteDao extends CrudRepository<Cliente, Long> {
 	
 	public List<Cliente> findByDni(String dni);
 
+	@Query(value="SELECT c FROM Cliente c WHERE c.nombre is not null ORDER BY c.nombre ASC")	
+	public List<Cliente> findAll();
 }

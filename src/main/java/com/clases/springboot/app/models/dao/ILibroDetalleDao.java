@@ -21,7 +21,9 @@ public interface ILibroDetalleDao extends CrudRepository<LibroDetalle,Long>{
 	public List<LibroDetalle> findByIdLibroTipoSacramento(Tipo tipoSacramento);
 
 	
-	
+	@Query(value="Select ld FROM LibroDetalle ld where YEAR(ld.fechaSacramento)=:anio and (MONTH(ld.fechaSacramento)=:mes or :mes=isnull(ld.fechaSacramento,13))")
+	public List<LibroDetalle> buscarPorAnioAndMes(int anio, int mes);
+
 	
 	
 	

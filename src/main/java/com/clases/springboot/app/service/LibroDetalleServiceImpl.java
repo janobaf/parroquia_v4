@@ -77,6 +77,7 @@ public class LibroDetalleServiceImpl implements ILibroDetalleService {
 	@Transactional
 	@Override
 	public void save(LibroDetalle libroDetalle) {
+		
 		List<Cliente> findByDni = clienteDao.findByDni(libroDetalle.getIdCliente().getDni());
 		if(findByDni.size()==0) {
 			clienteDao.save(libroDetalle.getIdCliente());
@@ -395,6 +396,12 @@ public class LibroDetalleServiceImpl implements ILibroDetalleService {
 		Report report = new Report();
 		report.setPdfBase(archivoBase);
 		return report;
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<LibroDetalle> buscarPorAnioAndMes(int anio, int mes) {
+		return (List<LibroDetalle>) libroDetalleDao.buscarPorAnioAndMes(anio,mes);
 	}    
 	
 	

@@ -31,4 +31,7 @@ public interface ILibroDetalleService {
 	public Report reporteLibroConfirmacionPorPersona(Long idDetalleLibro)throws Exception,JRException, IOException,  ParseException, DocumentException;
 	
 	//public Report reporteLibroMatrimonioPorPersona(Long idDetalleLibro)throws Exception,JRException, IOException,  ParseException, DocumentException;
+
+	public List<LibroDetalle> buscarPorAnioAndMes(int anio, int mes);
+
 }

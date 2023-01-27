@@ -17,5 +17,6 @@ public interface IEmpleadoDao extends CrudRepository<Empleado, Long> {
 	public List<Empleado> buscarPorDNI(@Param("dni") String DNI);
 	
 	//public List<Empleado> findByCargoIdAndEstado(String estado);
+	public List<Empleado> findByCargoIdId(Long cargoId);
 
 }

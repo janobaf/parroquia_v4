@@ -2,7 +2,8 @@
 	<footer th:fragment="footerFragment">
 		
 		<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js" i crossorigin="anonymous"></script>
-			
+			<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 		<script>
             const btn = document.querySelector('#menu-btn');
             const menu = document.querySelector('#sidemenu');
@@ -22,6 +23,7 @@
             $(this).next('.sub-menu').slideToggle();
             $(this).find('.dropdown').toggleClass('rotate');
             });
+            $(".select2").select2();
         });
         
          $(document).ready( function () {
@@ -87,7 +89,7 @@
 				
 				
 			}
-	
+			
 		  </script>
 	</footer>
 	

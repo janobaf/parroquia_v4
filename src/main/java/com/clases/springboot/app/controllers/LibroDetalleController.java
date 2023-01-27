@@ -15,15 +15,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.clases.springboot.app.models.entity.Cliente;
+import com.clases.springboot.app.models.entity.Empleado;
 import com.clases.springboot.app.models.entity.LibroDetalle;
 import com.clases.springboot.app.models.entity.Report;
 import com.clases.springboot.app.models.entity.Tipo;
+import com.clases.springboot.app.service.IClienteService;
+import com.clases.springboot.app.service.IEmpleadoService;
 import com.clases.springboot.app.service.ILibroDetalleService;
+import com.clases.springboot.app.service.IReportService;
 import com.itextpdf.text.DocumentException;
 
 import net.sf.jasperreports.engine.JRException;
@@ -34,6 +40,16 @@ public class LibroDetalleController {
 
 	@Autowired
 	private ILibroDetalleService libroDetalleService;	
+	
+	@Autowired
+	private IEmpleadoService empleadoService;
+	
+	@Autowired
+	private IClienteService clienteService;
+	
+	@Autowired
+	private IReportService reportService;
+	
 	
 	
 	@RequestMapping(value= {"/listarLibroBautizo"}, method=RequestMethod.GET)
@@ -74,13 +90,20 @@ public class LibroDetalleController {
 		model.put("titulo", "Formulario de Libro Bautizo");		
 		LibroDetalle libroBautizo = new LibroDetalle();
 		model.put("librosBautizo", libroBautizo);
+		List<Empleado> findByCargoIdId = empleadoService.findByCargoIdId(Long.valueOf(2));
+		model.put("parrocos", findByCargoIdId);
+		List<Cliente> clienteFindAll = clienteService.findAll();
+		model.put("clientes", clienteFindAll);
 		return "libroDetalle/formLibroBautizo";
 	}
 	
 	
 	@RequestMapping(value="/formLibroBautizo/{id}" )
 	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model,RedirectAttributes f) {
-		LibroDetalle libroBautizo = null;		
+		LibroDetalle libroBautizo = null;	
+		
+
+
 		if (id>0) {
 			libroBautizo = libroDetalleService.findById(id);
 			if(libroBautizo == null) {
@@ -92,6 +115,8 @@ public class LibroDetalleController {
 			f.addFlashAttribute("error","El ID del Libro no puede ser cero!");
 			return "redirect:/libroDetalle/formLibroBautizo";			
 		}
+		
+		
 		model.put("librosBautizo", libroBautizo);
 		model.put("titulo", "Editar Libro");
 		return "libroDetalle/formLibroBautizo";
@@ -159,6 +184,25 @@ public class LibroDetalleController {
 			
 			return libroDetalleService.reporteLibroConfirmacionPorPersona(id);
 		}
+		
+		@RequestMapping(value= {"/reportAnioMes"}, method=RequestMethod.GET)
+		public String findByYearAndMonth(@RequestParam(value="anio",required=false) Integer anio,
+				   @RequestParam(value="mes",required=false) Integer mes,
+					Model model){
+			model.addAttribute("titulo", "Listado de Libros");
+			model.addAttribute("libros", libroDetalleService.buscarPorAnioAndMes(anio, mes));
+
+			return "libro/listarLibro";
+			
+		}
+		
+		@GetMapping("/rptLibroDetalleByAnioAndMes")
+		@ResponseBody
+		public Report reporteLibroDetalle(@PathVariable Long id) throws JRException, IOException, ParseException, DocumentException, Exception{
+		
+			return reportService.reporteLibroDetalleByAnioAndMes(2022, 1);
+		}
+		
 		
 		
 	

@@ -24,5 +24,5 @@ public interface IEmpleadoService {
 	
 	public List<Empleado> buscarPorDNI(String DNI);
 	
-	//public List<Empleado> findByCargoIdAndEstado(String estado);
+	public List<Empleado> findByCargoIdId(Long cargoId);
 }

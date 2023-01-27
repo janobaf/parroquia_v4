@@ -26,22 +26,35 @@
 							<input type="text" name="apePaterno" id="apePaterno" placeholder="" class="casilla" th:field="*{idCliente.apePaterno}" disabled="disabled" >
                             <input type="text" name="apeMaterno" id="apeMaterno" placeholder="" class="casilla" th:field="*{idCliente.apeMaterno}" disabled="disabled" >
                             </br>
-                            <label for="Padre">Padre</label>
-                            <input type="text" name="padre" id="" placeholder="" class="casilla" th:field="*{padre}">               
+                             <label for="padre">Padre</label>
+                            <select id="cboPadre" name="padre" th:field="*{padre}" class="select2">
+							   <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+							</select>
                             </br>
-                            <label for="Madre">Madre</label>
-                            <input type="text" name="madre" id="" placeholder="" class="casilla" th:field="*{madre}">             
-                            </br> 
-                            <label for="Padrino">Padrino</label>
-                            <input type="text" name="padrino" id="" placeholder="" class="casilla" th:field="*{padrino}">
                             </br>
-                            <label for="Madrina">Madrina</label>
-                            <input type="text" name="madrina" id="" placeholder="" class="casilla" th:field="*{madrina}"> 
-                            <a href=""><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas"></a>
+                             <label for="madre">Madre</label>
+                            <select id="cboMadre" name="madre" th:field="*{madre}" class="select2">
+							   <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+							</select>
                             </br>
-                            <label for="Parroco">Parroco</label>
-                            <select id="parroco" name="parroco" th:field="*{parroco.id}" >
-							    <option value="1">1</option>
+                              </br>
+                             <label for="padrino">Padrino</label>
+                            <select id="cboPadrino" name="padrino" th:field="*{padrino}" class="select2" >
+							   <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+							</select>
+                            
+                               </br>
+                               </br>
+                             <label for="madrina">Madrina</label>
+                            <select id="cboMadrina" name="madrina" th:field="*{madrina}" class="select2" >
+							   <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+							</select>
+							 <a href=""><img src="../img/mas.png" alt="" class="estiloImagenPequenoMas"></a>
+                            </br>
+                            </br>
+                            <label for="parrocos">Parroco</label>
+                            <select id="cboParroco" name="parroco" th:field="*{parroco.id}" class="select2">
+							   <option th:each="par : ${parrocos}" th:value="${par.id}" th:text="${par.nombres}"></option>
 							</select>
                             <!--   <input type="text" name="dni" id="dni" placeholder="" class="casilla" th:field="*{parroco.id}" autofocus > -->
                             </br> 

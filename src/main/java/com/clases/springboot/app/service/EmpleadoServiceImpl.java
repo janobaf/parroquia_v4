@@ -272,6 +272,13 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 		return cabeceraTable;
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public List<Empleado> findByCargoIdId(Long cargoId) {
+		return (List<Empleado>) empleadoDao.findByCargoIdId(cargoId);
+
+	}
+
 	/*@Override
 	public List<Empleado> findByCargoIdAndEstado(String estado) {
 			return (List<Empleado>)empleadoDao.findByCargoIdAndEstado(estado);

@@ -315,3 +315,7 @@ body{
     background-color: rgba(39, 39, 175, 0.938);
     transition: all ease 1s;
 }
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+	    font-size: 15px;
+}

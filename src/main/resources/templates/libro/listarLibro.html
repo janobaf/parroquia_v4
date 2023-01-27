@@ -65,7 +65,7 @@
 								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.numPaginas}"></td>
 								<td sec:authorize="hasRole('ROLE_USER')" th:text="${libro.estado} ? 'Activo' : 'Cerrado'"></td>
 								<td sec:authorize="hasRole('ROLE_USER')">
-									<a th:href="@{/formLibro/}+${libro.id}"><img src="../img/editar.png"  alt="" class="estiloImagenPequeno"></a>
+									<a  th:href="@{/formLibro/}+${libro.id}"><img src="../img/editar.png"  alt="" class="estiloImagenPequeno"></a>
 								</td>											
 								<td sec:authorize="hasRole('ROLE_ADMIN')">
 									<a th:href="@{/eliminarLibro/}+${libro.id}" onclick="return confirm('Deseas Eliminar?');"><img src="../img/eliminar.png"  alt="" class="estiloImagenPequeno"></a>
