@@ -14,9 +14,11 @@
             <div  id="fechaactual"><i onclick="actualizar()">HOY: </i>  
             </div>           
              
+              <span th:if="${error}"  th:text="${error}">Error</span>
             <main>
 				<form th:action="@{/formLibroBautizo}" th:object="${librosBautizo}" method="post">
 				<h3 style="border-bottom: solid 1px rgb(20, 0, 0)">Informacion de Bautizando</h3>
+				
 				<br>                       
                             <label for="DNI" >DNI</label>
                             <input type="hidden" name="idCliente" id="idCliente" placeholder="" class="casilla" th:field="*{idCliente.id}" autofocus >

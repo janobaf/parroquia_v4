@@ -33,5 +33,7 @@ public interface ILibroDetalleService {
 	//public Report reporteLibroMatrimonioPorPersona(Long idDetalleLibro)throws Exception,JRException, IOException,  ParseException, DocumentException;
 
 	public List<LibroDetalle> buscarPorAnioAndMes(int anio, int mes);
+	
+	public boolean registrable(LibroDetalle libroDetalle, Long idTipoSacramento);
 
 }

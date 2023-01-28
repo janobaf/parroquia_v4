@@ -402,6 +402,22 @@ public class LibroDetalleServiceImpl implements ILibroDetalleService {
 	@Transactional(readOnly=true)
 	public List<LibroDetalle> buscarPorAnioAndMes(int anio, int mes) {
 		return (List<LibroDetalle>) libroDetalleDao.buscarPorAnioAndMes(anio,mes);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public boolean registrable(LibroDetalle libroDetalle, Long idTipoSacramento) {
+		boolean registrable=true;
+		Tipo tipoSacramento = new Tipo();
+		tipoSacramento.setId(idTipoSacramento);
+		 List<LibroDetalle> findDetalles = libroDetalleDao.findByIdLibroTipoSacramento(tipoSacramento);
+		 for(LibroDetalle detalle : findDetalles) {
+			 if((detalle.getIdCliente().getDni()).trim().equals((libroDetalle.getIdCliente().getDni()).trim())) {
+				 registrable=false;
+				 break;
+			 }
+		 }
+		return registrable;
 	}    
 	
 	

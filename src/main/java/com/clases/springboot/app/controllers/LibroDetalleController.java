@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,8 +101,12 @@ public class LibroDetalleController {
 	
 	@RequestMapping(value="/formLibroBautizo/{id}" )
 	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model,RedirectAttributes f) {
-		LibroDetalle libroBautizo = null;	
-		
+		LibroDetalle libroBautizo = null;
+		model.put("librosBautizo", libroBautizo);
+		List<Empleado> findByCargoIdId = empleadoService.findByCargoIdId(Long.valueOf(2));
+		model.put("parrocos", findByCargoIdId);
+		List<Cliente> clienteFindAll = clienteService.findAll();
+		model.put("clientes", clienteFindAll);
 
 
 		if (id>0) {
@@ -144,11 +149,25 @@ public class LibroDetalleController {
 	
 	@RequestMapping(value= {"/formLibroBautizo"}, method=RequestMethod.POST)
 	public String guardarLibroBautizo(@Valid LibroDetalle libroDetalle, BindingResult result, Model model,RedirectAttributes f, SessionStatus status) {
-		if(result.hasErrors()) {
+		
+		
+		
+		if(result.hasErrors() || !libroDetalleService.registrable(libroDetalle,1L)) {
+			LibroDetalle libroBautizo = libroDetalle;
+			List<Empleado> findByCargoIdId = empleadoService.findByCargoIdId(Long.valueOf(2));
+			model.addAttribute("parrocos", findByCargoIdId);
+			List<Cliente> clienteFindAll = clienteService.findAll();
+			model.addAttribute("clientes", clienteFindAll);
+			model.addAttribute("librosBautizo", libroBautizo);
 			model.addAttribute("titulo", "Formulario de Libro Bautizo");
+			model.addAttribute("error", "La persona ya ha sido bautizada anteriormente");
 			return "libroDetalle/formLibroBautizo";
+		}else {
+			libroDetalleService.save(libroDetalle);
+
 		}
-		libroDetalleService.save(libroDetalle);
+	
+		
 		status.setComplete();
 		f.addFlashAttribute("success","Grabado con exito");
 		return "redirect:listarLibroBautizo";
