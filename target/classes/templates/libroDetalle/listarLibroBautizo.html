@@ -125,8 +125,8 @@
 			    }
 		}	
 		async function pruebalibroBautizo(id){
-			//let url =("replibroBautizoPersona/"+id);
-			let url =("replibroBautizoPersona");
+			let url =("replibroBautizoPersona/"+id);
+			//let url =("replibroBautizoPersona");
 
 			let pdfBase = await obtenerDatosGet(url,null);
 				agregarIframePdf("reporte",pdfBase);
